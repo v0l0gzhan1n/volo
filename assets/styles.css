@@ -209,6 +209,9 @@ hr{
     padding: 10px 77px;
     transition: background-color 0.5s ease, border 0.5s ease;
 }
+button{
+    font-family: 'Micra Bold'; 
+}
 .con_text button, .menu_btn button{
     padding: 10px 20px;
 }
@@ -453,6 +456,7 @@ button:hover{
 }
 .carousel-indicators [data-bs-target]{
     background-color: #FF810F !important;
+    z-index: 999 !important;
 }
 .card {
     width: 100%;
