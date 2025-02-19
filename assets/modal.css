@@ -1,0 +1,365 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 1000px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: row !important;
+    align-items: flex-start;
+    gap: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 10000;
+    color: #FF810F;
+    font-weight: bold;
+}
+
+.modal-logo {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 50px;
+}
+
+.modal-gallery {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-image-container {
+    position: relative;
+    width: 100%;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+.thumbnail-container {
+    display: flex;
+    margin-top: 10px;
+    gap: 5px;
+    justify-content: center;
+}
+
+.thumbnail-container img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.thumbnail-container img.active_modal {
+    border: 2px solid orange;
+}
+
+.modal-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.modal-price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    background: #ddd;
+    padding: 5px 15px;
+    border-radius: 20px;
+    gap: 10px;
+}
+
+.quantity-control button {
+    background: #FF810F;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.quantity-control .quantity {
+    font-size: 16px;
+    font-weight: bold;
+}
+.modal-info .add-to-cart {
+    font-family: 'Micra Bold';
+    background: #FF810F;
+    color: black;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 77px !important;
+    cursor: pointer;
+    transition: background-color 0.5s ease, border 0.5s ease;
+    font-size: 16px;
+    font-weight: bold;
+}
+.main-image-container button:hover{
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+.modal-info .add-to-cart:hover {
+    background-color: white !important;
+    border: black solid 1px !important;
+}
+
+.modal-description {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+}
+.quantity-control{
+    border: solid black 1px !important;
+}
+#cart-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 129, 15, 0.8);
+    padding: 10px;
+    border-radius: 50px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: black;
+    color: white;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+}
+
+#cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#cart-popup {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+#cart-items {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#cart-close {
+    cursor: pointer;
+    font-size: 20px;
+    color: red;
+}
+
+#cart-checkout {
+    background: #FF810F;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#cart-checkout:hover {
+    background: white;
+    border: 1px solid black;
+}
+.modal-info h2{
+    padding-right: 30px;
+}
+.modal-info-con {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-info-content {
+    background: white;
+    padding: 30px;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 10000;
+}
+.modal-info-content h2{
+    font-family: 'Philosopher';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-align: left;
+    color: #FF810F;
+}
+.modal-info-content ul{
+    font-family: 'Philosopher';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-align: left;
+    color: #000000;
+    padding-left: 80px;
+
+}
+.modal-info-content li{
+    margin-bottom: 15px;
+}
+.close-info-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 32px;
+    cursor: pointer;
+    color: #FF810F;
+}
+.close:hover {
+    color: #000;
+}
+
+@keyframes fadeInLeftCustom {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRightCustom {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fadeInLeftCustom {
+    animation: fadeInLeftCustom 1s ease forwards;
+}
+
+.fadeInRightCustom {
+    animation: fadeInRightCustom 1s ease forwards;
+}
+@media screen and (max-width: 768px) {
+    .modal-content {
+        flex-direction: column !important;
+        width: 95%;
+    }
+    .modal-info-content{
+        max-width: 400px;
+        font-size: 16px;
+    }
+    .modal{
+        margin-top: 50px;
+    }
+    .main-image-container {
+        position: relative;
+        width: 45%;
+    }
+    .quantity-control{
+        margin-top: 0 !important;
+    }
+    .modal-gallery {
+        width: 100%;
+    }
+
+    .modal-info {
+        width: 100%;
+    }
+
+    .btn {
+        padding: 10px 40px;
+        font-size: 14px;
+    }
+}

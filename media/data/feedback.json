@@ -1,0 +1,38 @@
+[
+    {
+        "client_name": "Светлана",
+        "avatar": "./media/img/avatars/svetlana.png",
+        "review_screenshot": "./media/img/reviews/svetlana_review.png",
+        "food_images": [
+            "./media/img/food/food1.png",
+            "./media/img/food/food2.png"
+        ]
+    },
+    {
+        "client_name": "Марина",
+        "avatar": "./media/img/avatars/marina.png",
+        "review_screenshot": "./media/img/reviews/marina_review.png",
+        "food_images": [
+            "./media/img/food/food3.png",
+            "./media/img/food/food4.png"
+        ]
+    },
+    {
+        "client_name": "Юлия",
+        "avatar": "./media/img/avatars/yulia.png",
+        "review_screenshot": "./media/img/reviews/yulia_review.png",
+        "food_images": [
+            "./media/img/food/food5.png",
+            "./media/img/food/food6.png"
+        ]
+    },
+    {
+        "client_name": "Анна",
+        "avatar": "./media/img/avatars/anna.png",
+        "review_screenshot": "./media/img/reviews/anna_review.png",
+        "food_images": [
+            "./media/img/food/food7.png",
+            "./media/img/food/food8.png"
+        ]
+    }
+]
