@@ -52,10 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                <img src="${product.images.hover}" class="card-img-top hover-img clickable open-modal" alt="${product.images.hover}" style="position: absolute; top: 0; left: 0;">
                             </div>
                            <div class="card-body">
-                               <h5 class="card-title open-modal">${product.name}</h5>
-                               <p class="card-price open-modal">Цена: ${product.price}</p>
+                               <h5 class="card-title clickable open-modal">${product.name}</h5>
+                               <p class="card-price clickable open-modal">Цена: ${product.price}</p>
                                <a href="#" class="toggle-description">Подробнее...</a>
-                               <p class="card-text open-modal short-description" style="display: none;">${product.short_description}</p>
+                               <p class="card-text clickable open-modal short-description" style="display: none;">${product.short_description}</p>
                                <button class="btn add-to-cart" data-id="${product.name}">В корзину</button>
                             </div>
                        </div>
@@ -83,12 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
             
                 Object.keys(cart).forEach(productId => {
                     let product = cart[productId];
+                    let totalPrice = product.price * product.quantity;
             
                     cartItemsContainer.innerHTML += `
                     <div class="cart-item" data-id="${productId}">
                         <div class="cart-item-info">
                             <img src="${product.image}" class="cart-item-img">
                             <span>${productId}</span>
+                            <span>Цена: ${totalPrice.toFixed(2)} руб.</span>
                         </div>
                         <div class="quantity-control" data-id="${productId}">
                             <button class="btn-decrease" data-id="${productId}">-</button><hr>
@@ -136,14 +138,17 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.addEventListener("click", function (event) {
                 if (event.target.classList.contains("add-to-cart")) {
                     let productId = event.target.dataset.id;
-                    let productImage = event.target.closest(".card").querySelector(".main-img").src;
+                    let productCard = event.target.closest(".card");
+                    let productImage = productCard.querySelector(".main-img").src;
+                    let productPrice = parseFloat(productCard.querySelector(".card-price").textContent.replace("Цена: ", ""));
+            
                     if (!cart[productId]) {
-                        cart[productId] = { quantity: 1, image: productImage };
+                        cart[productId] = { quantity: 1, image: productImage, price: productPrice };
                     } else {
                         cart[productId].quantity++;
                     }
                     updateCartUI();
-
+            
                     event.target.outerHTML = `
                         <div class="quantity-control" data-id="${productId}">
                             <button class="btn-decrease" data-id="${productId}">-</button><hr>
@@ -164,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.querySelector(`.quantity[data-id="${productId}"]`).textContent = cart[productId].quantity;
                     });
                 });
-
+            
                 document.querySelectorAll(".btn-decrease").forEach(btn => {
                     btn.addEventListener("click", function () {
                         let productId = this.dataset.id;
@@ -185,8 +190,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".add-to-cart").forEach(btn => {
                     btn.addEventListener("click", function () {
                         let productId = this.dataset.id;
-                        let productImage = this.closest(".card").querySelector(".main-img").src;
-                        cart[productId] = { quantity: 1, image: productImage };
+                        let productCard = this.closest(".card");
+                        let productImage = productCard.querySelector(".main-img").src;
+                        let productPrice = parseFloat(productCard.querySelector(".card-price").textContent.replace("Цена: ", ""));
+                        cart[productId] = { quantity: 1, image: productImage, price: productPrice };
                         updateCartUI();
                         this.outerHTML = `
                             <div class="quantity-control" data-id="${productId}">
