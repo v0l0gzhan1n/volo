@@ -77,25 +77,36 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             function attachCartListeners() {
                 document.querySelectorAll('.btn-increase').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const productId = this.getAttribute('data-id');
-                        cart[productId].quantity += 1;
-                        updateCartUI();
-                    });
+                    button.removeEventListener('click', handleIncrease);
+                });
+                document.querySelectorAll('.btn-decrease').forEach(button => {
+                    button.removeEventListener('click', handleDecrease);
                 });
             
-                document.querySelectorAll('.btn-decrease').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const productId = this.getAttribute('data-id');
-                        console.log(productId)
-                        if (cart[productId].quantity > 1) {
-                            cart[productId].quantity -= 1;
-                        } else {
-                            delete cart[productId];
-                        }
-                        updateCartUI();
-                    });
+                document.querySelectorAll('.btn-increase').forEach(button => {
+                    button.addEventListener('click', handleIncrease);
                 });
+                document.querySelectorAll('.btn-decrease').forEach(button => {
+                    button.addEventListener('click', handleDecrease);
+                });
+            
+                function handleIncrease() {
+                    const productId = this.getAttribute('data-id');
+                    cart[productId].quantity++;
+                    updateCartUI();
+                }
+            
+                function handleDecrease() {
+                    const productId = this.getAttribute('data-id');
+                    if (cart[productId].quantity > 1) {
+                        cart[productId].quantity--;
+                        updateCartUI();
+                    } else {
+                        delete cart[productId];
+                        updateCartUI();
+                    }
+                    
+                }
             }
             function updateCartUI() {
                 const cartCount = document.getElementById("cart-count");
@@ -129,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 totalSumElement.textContent = `${totalSum.toFixed(2)} руб.`;
             
                 attachCartListeners();
+                attachQuantityListeners();
             }
             
             
@@ -163,7 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             <span class="quantity" data-id="${productId}">${cart[productId].quantity}</span><hr>
                             <button class="btn-increase" data-id="${productId}">+</button>
                         </div>`;
-                    
                     attachQuantityListeners();
                 }
             });
@@ -219,6 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             cartIcon.addEventListener("click", function () {
                 cartModal.style.display = "flex";
+                attachCartListeners();
             });
             document.querySelector(".cart-close").addEventListener("click", function () {
                 cartModal.style.display = "none";
