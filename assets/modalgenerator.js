@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (event) {
         const triggerElement = event.target.closest(".clickable");
         if (!triggerElement) return;
-
+        let cart = {};
         const card = triggerElement.closest(".card");
         if (!card) return;
 
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             modal.classList.add("modal");
             document.body.appendChild(modal);
         }
-
+    
         let images = [product.images.main, product.images.hover];
         let galleryHTML = `
             <div class="modal-gallery">
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ${images.map((img, index) => `<img src="${img}" class="thumbnail ${index === 0 ? "active_modal" : ""}" alt="${product.name}">`).join("")}
                 </div>
             </div>`;
-
+    
         modal.innerHTML = `
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -51,43 +51,81 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p class="modal-price">${product.price}</p>
                     <div class="quantity-control">
                         <button class="btn-decrease">-</button>
-                        <hr><span class="quantity">1</span><hr>
+                        <hr><span class="quantity">${cart[product.name] ? cart[product.name].quantity : 1}</span><hr>
                         <button class="btn-increase">+</button>
                     </div>
                     <button class="btn add-to-cart">В КОРЗИНУ</button>
                     <p class="modal-description">${product.full_description}</p>
                 </div>
             </div>`;
-
         modal.style.display = "flex";
-
-        document.querySelector(".close").addEventListener("click", () => modal.style.display = "none");
-
+    
+        const quantityElement = modal.querySelector(".quantity");
+        const btnIncrease = modal.querySelector(".btn-increase");
+        const btnDecrease = modal.querySelector(".btn-decrease");
+    
+        btnIncrease.addEventListener("click", () => {
+            if (!cart[product.name]) {
+                cart[product.name] = { quantity: 1, price: product.price, image: product.images.main };
+            } else {
+                cart[product.name].quantity++;
+            }
+            quantityElement.textContent = cart[product.name].quantity;
+            updateCartUI();
+        });
+    
+        btnDecrease.addEventListener("click", () => {
+            if (cart[product.name] && cart[product.name].quantity > 1) {
+                cart[product.name].quantity--;
+                quantityElement.textContent = cart[product.name].quantity;
+            } else if (cart[product.name] && cart[product.name].quantity === 1) {
+                delete cart[product.name];
+                quantityElement.textContent = 1;
+            }
+            updateCartUI();
+        });
+    
+        // Обработчик для кнопки "В корзину"
+        const addToCartButton = modal.querySelector(".add-to-cart");
+        addToCartButton.addEventListener("click", () => {
+            if (!cart[product.name]) {
+                cart[product.name] = { quantity: 1, price: product.price, image: product.images.main };
+            } else {
+                cart[product.name].quantity++;
+            }
+            updateCartUI(); // Обновление корзины
+            modal.style.display = "none"; // Закрытие модального окна
+        });
+    
+        // Закрытие модального окна
+        modal.querySelector(".close").addEventListener("click", () => modal.style.display = "none");
         modal.addEventListener("click", (e) => {
             if (e.target === modal) modal.style.display = "none";
         });
-        const mainImage = document.querySelector(".main-image");
-        const thumbnails = document.querySelectorAll(".thumbnail");
+    
+        // Галерея изображений
+        const mainImage = modal.querySelector(".main-image");
+        const thumbnails = modal.querySelectorAll(".thumbnail");
         let currentIndex = 0;
-
+    
         function updateImage(index) {
             mainImage.src = images[index];
             thumbnails.forEach(thumb => thumb.classList.remove("active_modal"));
             thumbnails[index].classList.add("active_modal");
             currentIndex = index;
         }
-
+    
         if (thumbnails.length > 1) {
-            document.querySelector(".prev-btn").addEventListener("click", () => {
+            modal.querySelector(".prev-btn").addEventListener("click", () => {
                 let newIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
                 updateImage(newIndex);
             });
-
-            document.querySelector(".next-btn").addEventListener("click", () => {
+    
+            modal.querySelector(".next-btn").addEventListener("click", () => {
                 let newIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
                 updateImage(newIndex);
             });
-
+    
             thumbnails.forEach((thumb, index) => {
                 thumb.addEventListener("click", () => updateImage(index));
             });
