@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <h2>Корзина</h2>
                     <div id="cart-items"></div>
                     <div class="cart-footer">
+                        <div id="cart-total">
+                            <strong>Итог:</strong> <span id="total-sum">0.00 руб.</span>
+                        </div>
                         <input type="text" id="customer-name" placeholder="ФИО">
                         <input type="tel" id="customer-phone" placeholder="Телефон">
                         <textarea id="customer-comment" placeholder="Комментарий"></textarea>
@@ -76,8 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
             function updateCartUI() {
                 const cartCount = document.getElementById("cart-count");
                 const cartItemsContainer = document.getElementById("cart-items");
+                const totalSumElement = document.getElementById("total-sum");
             
                 let totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+                let totalSum = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
                 cartCount.textContent = totalItems;
                 cartItemsContainer.innerHTML = "";
             
@@ -99,6 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     </div>`;
                 });
+            
+                totalSumElement.textContent = `${totalSum.toFixed(2)} руб.`;
             
                 attachCartListeners();
             }
