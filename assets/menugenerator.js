@@ -75,7 +75,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 container.appendChild(categoryBlock);
             });
-
+            function attachCartListeners() {
+                document.querySelectorAll('.btn-increase').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        cart[productId].quantity += 1;
+                        updateCartUI();
+                    });
+                });
+            
+                document.querySelectorAll('.btn-decrease').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        console.log(productId)
+                        if (cart[productId].quantity > 1) {
+                            cart[productId].quantity -= 1;
+                        } else {
+                            delete cart[productId];
+                        }
+                        updateCartUI();
+                    });
+                });
+            }
             function updateCartUI() {
                 const cartCount = document.getElementById("cart-count");
                 const cartItemsContainer = document.getElementById("cart-items");
@@ -105,33 +126,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     </div>`;
                 });
-            
                 totalSumElement.textContent = `${totalSum.toFixed(2)} руб.`;
             
                 attachCartListeners();
             }
             
-            function attachCartListeners() {
-                document.querySelectorAll('.btn-increase').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const productId = this.getAttribute('data-id');
-                        cart[productId].quantity += 1;
-                        updateCartUI();
-                    });
-                });
             
-                document.querySelectorAll('.btn-decrease').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const productId = this.getAttribute('data-id');
-                        if (cart[productId].quantity > 1) {
-                            cart[productId].quantity -= 1;
-                        } else {
-                            delete cart[productId];
-                        }
-                        updateCartUI();
-                    });
-                });
-            }
 
             function attachCartListeners() {
                 document.querySelectorAll(".cart-remove").forEach(btn => {
@@ -183,13 +183,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         let productId = this.dataset.id;
                         if (cart[productId].quantity > 1) {
                             cart[productId].quantity--;
+                            updateCartUI();
+                            document.querySelector(`.quantity[data-id="${productId}"]`).textContent = cart[productId].quantity;
                         } else {
                             delete cart[productId];
                             document.querySelector(`.quantity-control[data-id="${productId}"]`).outerHTML = `
                                 <button class="btn add-to-cart" data-id="${productId}">В корзину</button>`;
+                                updateCartUI();
                             attachAddToCartListeners();
                         }
-                        updateCartUI();
+                        
                     });
                 });
             }
