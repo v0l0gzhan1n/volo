@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let newClass = "row-cols-md-4";
 
-            if (window.innerWidth <= 500) {
+            if (window.innerWidth <= 400) {
                 newClass = "row-cols-md-1";
             } else if (window.innerWidth <= 1200) {
                 newClass = "row-cols-md-2";
