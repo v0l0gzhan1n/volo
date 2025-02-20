@@ -140,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 totalSumElement.textContent = `${totalSum.toFixed(2)} руб.`;
             
                 attachCartListeners();
+                    attachQuantityListeners();
             }
             
             
